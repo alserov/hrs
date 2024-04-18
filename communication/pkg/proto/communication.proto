@@ -11,7 +11,7 @@ service Communication {
 }
 
 message MessageEdit {
- string Value = 1;
+  string Value = 1;
 }
 
 message MessageID {
@@ -22,4 +22,5 @@ message Message {
   string Value = 1;
   repeated string Files = 2;
   string SenderID = 3;
+  string RecipientID = 4;
 }
