@@ -34,3 +34,5 @@ jobs:
 
       - name: linter
         uses: golangci/golangci-lint-action@v4
+        with:
+          working-directory: communication
