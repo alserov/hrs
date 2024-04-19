@@ -10,8 +10,10 @@ type Logger struct {
 	*zap.Logger
 }
 
+type CtxKey string
+
 const (
-	CtxLogger = "logger"
+	CtxLogger CtxKey = "logger"
 )
 
 func WithLogger(ctx context.Context, log Logger) context.Context {
