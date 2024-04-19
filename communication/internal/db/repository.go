@@ -8,5 +8,5 @@ import (
 type Repository interface {
 	CreateMessage(ctx context.Context, msg models.Message) error
 	DeleteMessage(ctx context.Context, msgID string) error
-	EditMessage(ctx context.Context, edit models.EditMessage) error
+	EditMessage(ctx context.Context, edit models.MessageEdit) error
 }

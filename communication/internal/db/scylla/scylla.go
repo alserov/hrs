@@ -29,7 +29,7 @@ func (s Scylla) DeleteMessage(ctx context.Context, msgID string) error {
 	panic("implement me")
 }
 
-func (s Scylla) EditMessage(ctx context.Context, edit models.EditMessage) error {
+func (s Scylla) EditMessage(ctx context.Context, edit models.MessageEdit) error {
 	//TODO implement me
 	panic("implement me")
 }

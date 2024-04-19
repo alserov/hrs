@@ -12,7 +12,8 @@ type Message struct {
 	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
-type EditMessage struct {
-	MessageID string `json:"messageID"`
-	Value     string `json:"value"`
+type MessageEdit struct {
+	MessageID string    `json:"messageID"`
+	Value     string    `json:"value"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
