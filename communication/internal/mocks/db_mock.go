@@ -76,3 +76,151 @@ func (mr *MockRepositoryMockRecorder) EditMessage(ctx, edit interface{}) *gomock
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EditMessage", reflect.TypeOf((*MockRepository)(nil).EditMessage), ctx, edit)
 }
+
+// GetChats mocks base method.
+func (m *MockRepository) GetChats(ctx context.Context, param models.ChatsParam) ([]models.Chat, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetChats", ctx, param)
+	ret0, _ := ret[0].([]models.Chat)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetChats indicates an expected call of GetChats.
+func (mr *MockRepositoryMockRecorder) GetChats(ctx, param interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetChats", reflect.TypeOf((*MockRepository)(nil).GetChats), ctx, param)
+}
+
+// GetHistory mocks base method.
+func (m *MockRepository) GetHistory(ctx context.Context, param models.HistoryParam) ([]models.Message, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetHistory", ctx, param)
+	ret0, _ := ret[0].([]models.Message)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetHistory indicates an expected call of GetHistory.
+func (mr *MockRepositoryMockRecorder) GetHistory(ctx, param interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetHistory", reflect.TypeOf((*MockRepository)(nil).GetHistory), ctx, param)
+}
+
+// MockMessage is a mock of Message interface.
+type MockMessage struct {
+	ctrl     *gomock.Controller
+	recorder *MockMessageMockRecorder
+}
+
+// MockMessageMockRecorder is the mock recorder for MockMessage.
+type MockMessageMockRecorder struct {
+	mock *MockMessage
+}
+
+// NewMockMessage creates a new mock instance.
+func NewMockMessage(ctrl *gomock.Controller) *MockMessage {
+	mock := &MockMessage{ctrl: ctrl}
+	mock.recorder = &MockMessageMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockMessage) EXPECT() *MockMessageMockRecorder {
+	return m.recorder
+}
+
+// CreateMessage mocks base method.
+func (m *MockMessage) CreateMessage(ctx context.Context, msg models.Message) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateMessage", ctx, msg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateMessage indicates an expected call of CreateMessage.
+func (mr *MockMessageMockRecorder) CreateMessage(ctx, msg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateMessage", reflect.TypeOf((*MockMessage)(nil).CreateMessage), ctx, msg)
+}
+
+// DeleteMessage mocks base method.
+func (m *MockMessage) DeleteMessage(ctx context.Context, msgID string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteMessage", ctx, msgID)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteMessage indicates an expected call of DeleteMessage.
+func (mr *MockMessageMockRecorder) DeleteMessage(ctx, msgID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessage)(nil).DeleteMessage), ctx, msgID)
+}
+
+// EditMessage mocks base method.
+func (m *MockMessage) EditMessage(ctx context.Context, edit models.MessageEdit) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "EditMessage", ctx, edit)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// EditMessage indicates an expected call of EditMessage.
+func (mr *MockMessageMockRecorder) EditMessage(ctx, edit interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EditMessage", reflect.TypeOf((*MockMessage)(nil).EditMessage), ctx, edit)
+}
+
+// MockChat is a mock of Chat interface.
+type MockChat struct {
+	ctrl     *gomock.Controller
+	recorder *MockChatMockRecorder
+}
+
+// MockChatMockRecorder is the mock recorder for MockChat.
+type MockChatMockRecorder struct {
+	mock *MockChat
+}
+
+// NewMockChat creates a new mock instance.
+func NewMockChat(ctrl *gomock.Controller) *MockChat {
+	mock := &MockChat{ctrl: ctrl}
+	mock.recorder = &MockChatMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockChat) EXPECT() *MockChatMockRecorder {
+	return m.recorder
+}
+
+// GetChats mocks base method.
+func (m *MockChat) GetChats(ctx context.Context, param models.ChatsParam) ([]models.Chat, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetChats", ctx, param)
+	ret0, _ := ret[0].([]models.Chat)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetChats indicates an expected call of GetChats.
+func (mr *MockChatMockRecorder) GetChats(ctx, param interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetChats", reflect.TypeOf((*MockChat)(nil).GetChats), ctx, param)
+}
+
+// GetHistory mocks base method.
+func (m *MockChat) GetHistory(ctx context.Context, param models.HistoryParam) ([]models.Message, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetHistory", ctx, param)
+	ret0, _ := ret[0].([]models.Message)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetHistory indicates an expected call of GetHistory.
+func (mr *MockChatMockRecorder) GetHistory(ctx, param interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetHistory", reflect.TypeOf((*MockChat)(nil).GetHistory), ctx, param)
+}

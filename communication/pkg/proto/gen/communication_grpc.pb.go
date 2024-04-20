@@ -26,6 +26,8 @@ type CommunicationClient interface {
 	CreateMessage(ctx context.Context, in *Message, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteMessage(ctx context.Context, in *MessageID, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	EditMessage(ctx context.Context, in *MessageEdit, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetHistory(ctx context.Context, in *HistoryParam, opts ...grpc.CallOption) (*Messages, error)
+	GetChats(ctx context.Context, in *ChatsParam, opts ...grpc.CallOption) (*Chats, error)
 }
 
 type communicationClient struct {
@@ -63,6 +65,24 @@ func (c *communicationClient) EditMessage(ctx context.Context, in *MessageEdit, 
 	return out, nil
 }
 
+func (c *communicationClient) GetHistory(ctx context.Context, in *HistoryParam, opts ...grpc.CallOption) (*Messages, error) {
+	out := new(Messages)
+	err := c.cc.Invoke(ctx, "/Communication/GetHistory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *communicationClient) GetChats(ctx context.Context, in *ChatsParam, opts ...grpc.CallOption) (*Chats, error) {
+	out := new(Chats)
+	err := c.cc.Invoke(ctx, "/Communication/GetChats", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CommunicationServer is the server API for Communication service.
 // All implementations must embed UnimplementedCommunicationServer
 // for forward compatibility
@@ -70,6 +90,8 @@ type CommunicationServer interface {
 	CreateMessage(context.Context, *Message) (*emptypb.Empty, error)
 	DeleteMessage(context.Context, *MessageID) (*emptypb.Empty, error)
 	EditMessage(context.Context, *MessageEdit) (*emptypb.Empty, error)
+	GetHistory(context.Context, *HistoryParam) (*Messages, error)
+	GetChats(context.Context, *ChatsParam) (*Chats, error)
 	mustEmbedUnimplementedCommunicationServer()
 }
 
@@ -85,6 +107,12 @@ func (UnimplementedCommunicationServer) DeleteMessage(context.Context, *MessageI
 }
 func (UnimplementedCommunicationServer) EditMessage(context.Context, *MessageEdit) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditMessage not implemented")
+}
+func (UnimplementedCommunicationServer) GetHistory(context.Context, *HistoryParam) (*Messages, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHistory not implemented")
+}
+func (UnimplementedCommunicationServer) GetChats(context.Context, *ChatsParam) (*Chats, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChats not implemented")
 }
 func (UnimplementedCommunicationServer) mustEmbedUnimplementedCommunicationServer() {}
 
@@ -153,6 +181,42 @@ func _Communication_EditMessage_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Communication_GetHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HistoryParam)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommunicationServer).GetHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Communication/GetHistory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommunicationServer).GetHistory(ctx, req.(*HistoryParam))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Communication_GetChats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChatsParam)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommunicationServer).GetChats(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Communication/GetChats",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommunicationServer).GetChats(ctx, req.(*ChatsParam))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Communication_ServiceDesc is the grpc.ServiceDesc for Communication service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -171,6 +235,14 @@ var Communication_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EditMessage",
 			Handler:    _Communication_EditMessage_Handler,
+		},
+		{
+			MethodName: "GetHistory",
+			Handler:    _Communication_GetHistory_Handler,
+		},
+		{
+			MethodName: "GetChats",
+			Handler:    _Communication_GetChats_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

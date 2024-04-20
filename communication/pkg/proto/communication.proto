@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/alserov/hrs/communication;comm";
 
@@ -8,6 +9,34 @@ service Communication {
   rpc CreateMessage(Message) returns (google.protobuf.Empty);
   rpc DeleteMessage(MessageID) returns(google.protobuf.Empty);
   rpc EditMessage(MessageEdit) returns (google.protobuf.Empty);
+
+  rpc GetHistory(HistoryParam) returns (Messages);
+  rpc GetChats(ChatsParam) returns (Chats);
+}
+
+message Chats {
+  repeated Chat Chats = 1;
+}
+
+message Chat {
+  Message LastMessage = 1;
+}
+
+message ChatsParam {
+  string UserID = 1;
+  int32 Offset = 2;
+  int32 Limit = 3;
+}
+
+message Messages {
+  repeated Message Messages = 1;
+}
+
+message HistoryParam {
+  string UserID = 1;
+  string RecipientID = 2;
+  int32 Offset = 3;
+  int32 Limit = 4;
 }
 
 message MessageEdit {
@@ -20,8 +49,11 @@ message MessageID {
 }
 
 message Message {
-  string Value = 1;
-  repeated string Files = 2;
-  string SenderID = 3;
-  string RecipientID = 4;
+  string ID = 1;
+  string Value = 2;
+  repeated string Files = 3;
+  string SenderID = 4;
+  string RecipientID = 5;
+  optional google.protobuf.Timestamp CreatedAt = 6;
+  optional google.protobuf.Timestamp UpdatedAt = 7;
 }

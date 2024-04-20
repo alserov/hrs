@@ -36,6 +36,76 @@ type Scylla struct {
 	message *table.Table
 }
 
+func (s Scylla) GetHistory(ctx context.Context, param models.HistoryParam) ([]models.Message, error) {
+	cql := ``
+
+	query := s.Query(cql, []string{})
+
+	if err := query.Err(); err != nil {
+		return nil, utils.NewError(utils.ErrInternal, err.Error())
+	}
+
+	var msgs []models.Message
+
+	iter := query.Iter()
+	for {
+		var msg models.Message
+		if !iter.Scan(
+			&msg.ID,
+			&msg.Value,
+			&msg.Files,
+			&msg.SenderID,
+			&msg.RecipientID,
+			&msg.CreatedAt,
+			&msg.UpdatedAt) {
+			break
+		}
+		msgs = append(msgs, msg)
+	}
+	if err := iter.Close(); err != nil {
+		return nil, err
+	}
+
+	log.GetLogger(ctx).Debug("repo passed")
+
+	return msgs, nil
+}
+
+func (s Scylla) GetChats(ctx context.Context, param models.ChatsParam) ([]models.Chat, error) {
+	cql := ``
+
+	query := s.Query(cql, []string{})
+
+	if err := query.Err(); err != nil {
+		return nil, utils.NewError(utils.ErrInternal, err.Error())
+	}
+
+	var chats []models.Chat
+
+	iter := query.Iter()
+	for {
+		var chat models.Chat
+		if !iter.Scan(
+			&chat.LastMessage.ID,
+			&chat.LastMessage.Value,
+			&chat.LastMessage.Files,
+			&chat.LastMessage.SenderID,
+			&chat.LastMessage.RecipientID,
+			&chat.LastMessage.CreatedAt,
+			&chat.LastMessage.UpdatedAt) {
+			break
+		}
+		chats = append(chats, chat)
+	}
+	if err := iter.Close(); err != nil {
+		return nil, err
+	}
+
+	log.GetLogger(ctx).Debug("repo passed")
+
+	return chats, nil
+}
+
 func (s Scylla) CreateMessage(ctx context.Context, msg models.Message) error {
 	cql := fmt.Sprintf(`INSERT INTO %s (id, value, created_at) VALUES (?, ?, ?)`, s.message.Name())
 
