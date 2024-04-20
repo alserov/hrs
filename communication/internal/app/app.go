@@ -24,7 +24,10 @@ func MustStart(cfg *config.Config) {
 		}
 	}()
 
-	repo := scylla.NewRepository()
+	db := scylla.MustConnect(cfg.DB.Dsn())
+	defer db.Close()
+
+	repo := scylla.NewRepository(db)
 
 	uc := usecase.NewUsecase(repo)
 

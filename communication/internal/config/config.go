@@ -2,6 +2,7 @@ package config
 
 import (
 	"flag"
+	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"
 )
@@ -9,6 +10,22 @@ import (
 type Config struct {
 	Env  string `yaml:"env"`
 	Port int    `yaml:"port"`
+	DB   Scylla `yaml:"db"`
+}
+
+type Scylla struct {
+	Host string `yaml:"host"`
+	Port int    `yaml:"port"`
+}
+
+func (s *Scylla) Dsn() string {
+	addr := fmt.Sprintf("%s:%d", s.Host, s.Port)
+
+	if addr == "" {
+		return fmt.Sprintf("%s:%s", os.Getenv("SCYLLA_MESSAGES_HOST"), os.Getenv("SCYLLA_MESSAGES_PORT"))
+	}
+
+	return addr
 }
 
 const (
