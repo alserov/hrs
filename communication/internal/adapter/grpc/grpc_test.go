@@ -1,3 +1,4 @@
+// nolint
 package grpc
 
 import (
@@ -63,9 +64,7 @@ func (s *gRPCSuite) TestAdapter_CreateMessage() {
 
 	srvr := NewAdapter(uc, log.NewLogger(config.Local))
 
-	go func() {
-		_ = srvr.Serve(l)
-	}()
+	go srvr.Serve(l)
 
 	// ===============
 
@@ -93,9 +92,7 @@ func (s *gRPCSuite) TestAdapter_EditMessage() {
 
 	srvr := NewAdapter(uc, log.NewLogger(config.Local))
 
-	go func() {
-		_ = srvr.Serve(l)
-	}()
+	go srvr.Serve(l)
 
 	// ===============
 
@@ -122,9 +119,7 @@ func (s *gRPCSuite) TestAdapter_DeleteMessage() {
 
 	srvr := NewAdapter(uc, log.NewLogger(config.Local))
 
-	go func() {
-		_ = srvr.Serve(l)
-	}()
+	go srvr.Serve(l)
 
 	// ===============
 
