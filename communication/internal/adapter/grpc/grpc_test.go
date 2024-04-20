@@ -39,7 +39,7 @@ func (s *gRPCSuite) SetupTest() {
 }
 
 func (s *gRPCSuite) TearDownTest() {
-	l.Close()
+	_ = l.Close()
 }
 
 func (s *gRPCSuite) TestAdapter_CreateMessage() {
@@ -63,7 +63,9 @@ func (s *gRPCSuite) TestAdapter_CreateMessage() {
 
 	srvr := NewAdapter(uc, log.NewLogger(config.Local))
 
-	go srvr.Serve(l)
+	go func() {
+		_ = srvr.Serve(l)
+	}()
 
 	// ===============
 
@@ -91,7 +93,9 @@ func (s *gRPCSuite) TestAdapter_EditMessage() {
 
 	srvr := NewAdapter(uc, log.NewLogger(config.Local))
 
-	go srvr.Serve(l)
+	go func() {
+		_ = srvr.Serve(l)
+	}()
 
 	// ===============
 
@@ -118,7 +122,9 @@ func (s *gRPCSuite) TestAdapter_DeleteMessage() {
 
 	srvr := NewAdapter(uc, log.NewLogger(config.Local))
 
-	go srvr.Serve(l)
+	go func() {
+		_ = srvr.Serve(l)
+	}()
 
 	// ===============
 
