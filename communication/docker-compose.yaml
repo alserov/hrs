@@ -1,12 +1,16 @@
 version: "1"
 services:
   scylla:
-    container_name: messages
-    image: scylladb:scylla
-    restart: on-failure
-    command: --seeds=scylla-node1,scylla-node2 --smp 1 --memory 750M --overprovisioned 1 --api-address 0.0.0.0
+    image: scylladb/scylla
+    container_name: scylla
+    ports:
+      - "9042:9042"  # CQL port
+      - "9160:9160"  # Thrift port
+      - "7000:7000"  # Internode communication port
+      - "7001:7001"  # TLS Internode communication port
+      - "7199:7199"  # JMX port
     volumes:
-      - messages:/etc/data/scylla/messages
+      - messages:/var/lib/scylla/messages
 
 volumes:
   messages:

@@ -13,9 +13,17 @@ type Converter struct {
 }
 
 func (*Converter) ToMessage(msg *comm.Message) models.Message {
-	return models.Message{}
+	return models.Message{
+		Value:       msg.Value,
+		Files:       msg.Files,
+		SenderID:    msg.SenderID,
+		RecipientID: msg.RecipientID,
+	}
 }
 
 func (*Converter) ToMessageEdit(msg *comm.MessageEdit) models.MessageEdit {
-	return models.MessageEdit{}
+	return models.MessageEdit{
+		Value:     msg.Value,
+		MessageID: msg.ID,
+	}
 }

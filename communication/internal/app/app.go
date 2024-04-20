@@ -20,12 +20,14 @@ func MustStart(cfg *config.Config) {
 
 	defer func() {
 		if err := recover(); err != nil {
-			l.Error("recovery", zap.Any("error", err))
+			l.Error("recovery ❌", zap.Any("error", err))
 		}
 	}()
 
-	db := scylla.MustConnect(cfg.DB.Dsn())
+	db := scylla.MustConnect(cfg.DB)
 	defer db.Close()
+
+	l.Info("db connected ✔")
 
 	repo := scylla.NewRepository(db)
 
@@ -33,12 +35,14 @@ func MustStart(cfg *config.Config) {
 
 	srvr := grpc.NewAdapter(uc, l)
 
+	l.Info("layers are set up ✔")
+
 	shutdown(func() {
-		l.Info("server is running", zap.Int("port", cfg.Port))
+		l.Info("server is running ✔", zap.Int("port", cfg.Port))
 		run(cfg.Port, srvr)
 	})
 
-	l.Info("server stopped")
+	l.Info("server stopped ✔")
 }
 
 func run(port int, s *gRPC.Server) {

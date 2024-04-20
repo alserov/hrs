@@ -11,7 +11,8 @@ service Communication {
 }
 
 message MessageEdit {
-  string Value = 1;
+  string ID = 1;
+  string Value = 2;
 }
 
 message MessageID {

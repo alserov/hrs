@@ -4,6 +4,7 @@ go 1.22.0
 
 require (
 	github.com/gocql/gocql v1.6.0
+	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.6.0
 	github.com/scylladb/gocqlx/v2 v2.8.0
 	github.com/stretchr/testify v1.8.1
