@@ -40,7 +40,7 @@ func MustStart(cfg *config.Config) {
 	shutdown(func() {
 		l.Info("server is running ✔", zap.Int("port", cfg.Port))
 		run(cfg.Port, srvr)
-	})
+	}, srvr)
 
 	l.Info("server stopped ✔")
 }
@@ -56,9 +56,12 @@ func run(port int, s *gRPC.Server) {
 	}
 }
 
-func shutdown(fn func()) {
+func shutdown(fn func(), s *gRPC.Server) {
 	chStop := make(chan os.Signal, 1)
 	signal.Notify(chStop, syscall.SIGINT, syscall.SIGTERM)
+
 	go fn()
+
 	<-chStop
+	s.Stop()
 }
