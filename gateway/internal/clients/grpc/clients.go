@@ -17,6 +17,6 @@ func NewClients() *Clients {
 	}
 }
 
-func dial(addr string) (grpc.ClientConnInterface, error) {
+func dial(addr string) (*grpc.ClientConn, error) {
 	return grpc.Dial(addr, grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, "")))
 }

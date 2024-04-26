@@ -37,13 +37,16 @@ func (ccl *communicationServiceClient) refresh() {
 	defer t.Stop()
 
 	var (
-		conn gRPC.ClientConnInterface
+		conn *gRPC.ClientConn
 		err  error
 	)
 
 	for range t.C {
-		//addrs, _ := utils.Discover(CommunicationServiceName)
-		addrs := []string{"123"}
+		if conn != nil {
+			_ = conn.Close()
+		}
+
+		addrs, _ := utils.Discover(CommunicationServiceName)
 		ccl.b.Set(addrs)
 
 		conn, err = dial(ccl.b.Get())
